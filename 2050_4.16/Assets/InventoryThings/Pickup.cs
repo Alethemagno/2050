@@ -15,17 +15,15 @@ public class Pickup : MonoBehaviour
     }
 
 
-    void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Player")) {
-            Debug.Log("It worked");
-            for (int i = 0; i < inventory.slots.Length; i++) {
-                if (!inventory.isFull[i]) {
+    void PickUp() {
+        Debug.Log("It worked");
+        for (int i = 0; i < inventory.slots.Length; i++) {
+            if (!inventory.isFull[i]) {
 
-                    inventory.isFull[i] = true;
-                    Instantiate(itemButton, inventory.slots[i].transform, false);
-                    Destroy(gameObject);
-                    break;
-                }
+                inventory.isFull[i] = true;
+                Instantiate(itemButton, inventory.slots[i].transform, false);
+                Destroy(gameObject);
+                break;
             }
         }
     }
