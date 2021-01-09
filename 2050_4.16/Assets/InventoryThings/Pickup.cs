@@ -11,17 +11,15 @@ public class Pickup : MonoBehaviour
     void Start()
     {
         inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
-        Debug.Log(inventory);
     }
 
 
     void PickUp() {
-        Debug.Log("It worked");
         for (int i = 0; i < inventory.slots.Length; i++) {
             if (!inventory.isFull[i]) {
 
                 inventory.isFull[i] = true;
-                Instantiate(itemButton, inventory.slots[i].transform, false);
+                inventory.itemButtons[i] = Instantiate(itemButton, inventory.slots[i].transform, false);
                 Destroy(gameObject);
                 break;
             }
