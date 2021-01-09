@@ -6,12 +6,10 @@ using UnityEngine.AI;
 public class BasicEnemyController : MonoBehaviour
 {
     public NavMeshAgent agent;
-
     public Transform player;
-
     public LayerMask whatIsGround, whatIsPlayer;
-
     public float health;
+    public Light myLight;
 
     //Patroling
     public Vector3 walkPoint;
@@ -22,21 +20,24 @@ public class BasicEnemyController : MonoBehaviour
     public float timeBetweenAttacks;
     bool alreadyAttacked;
     public GameObject projectile;
+    Vector3 lastSeen;
 
     //States
-    public float sightRange, attackRange;
+    public float sightRange, attackRange, visionConeAngle;
     public bool playerInSightRange, playerInAttackRange;
 
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        myLight.color = Color.blue;
     }
 
     private void Update()
     {
         //Check for sight and attack range
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+        //playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+        playerInSightRange = checkSight();
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
         if (!playerInSightRange && !playerInAttackRange) Patroling();
@@ -44,8 +45,36 @@ public class BasicEnemyController : MonoBehaviour
         if (playerInAttackRange && playerInSightRange) AttackPlayer();
     }
 
+    private bool checkSight() {
+        Vector3 vectorToPlayer = player.position-transform.position;
+        if (vectorToPlayer.magnitude <= sightRange) {
+            if (Vector3.Angle(transform.forward, vectorToPlayer) <= visionConeAngle) {
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, sightRange, whatIsPlayer)) {
+                    lastSeen = hit.transform.position;
+                    return true;
+                }
+            }
+            //goThere(lastSeen);
+        }
+        return false;
+    }
+
+    private void goThere(Vector3 loc)
+    {
+        walkPoint = loc;
+        agent.SetDestination(walkPoint);
+        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+
+        //Walkpoint reached
+        if (distanceToWalkPoint.magnitude < 1f)
+            walkPointSet = false;
+            Patroling();
+    }
+
     private void Patroling()
     {
+        myLight.color = Color.blue;
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)
@@ -72,14 +101,15 @@ public class BasicEnemyController : MonoBehaviour
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
+        myLight.color = Color.white;
     }
 
     private void AttackPlayer()
     {
         //Make sure enemy doesn't move
         agent.SetDestination(transform.position);
-
         transform.LookAt(player);
+        myLight.color = Color.white;
 
         if (!alreadyAttacked)
         {
