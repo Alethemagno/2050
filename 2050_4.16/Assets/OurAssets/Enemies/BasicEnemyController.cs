@@ -53,18 +53,17 @@ public class BasicEnemyController : MonoBehaviour
 
     private bool checkSight() {
         RaycastHit hit;
-        Vector3 startingDirection = Quaternion.AngleAxis(-sightAngle, Vector3.up) * this.transform.forward;
+        Vector3 startingDirection = Quaternion.AngleAxis(-sightAngle, Vector3.up) * transform.forward;        
         Vector3 finalRayDirection = startingDirection;
         for (int i = 0; i < 7; i++) {
-            if (Physics.Raycast(transform.position, transform.position + finalRayDirection, out hit, sightRange, whatIsVisible)) {
-                Debug.Log("I see you" + hit.transform.tag);
+            if (Physics.Raycast(transform.position, finalRayDirection, out hit, sightRange, whatIsVisible)) {
+                Debug.Log("I see " + hit.transform.tag);
                 if(hit.transform.tag == "Player") {
                     return true;
                 }   
             }
             finalRayDirection = (Quaternion.AngleAxis(angleOffset, Vector3.up)) * finalRayDirection;
         }
-        Patroling();
         return false;
     }
 
@@ -117,16 +116,17 @@ public class BasicEnemyController : MonoBehaviour
     private void AttackPlayer()
     {
         //Make sure enemy doesn't move
-        //agent.SetDestination(transform.position);
-        transform.LookAt(player);
-        myLight.color = Color.white;
+        agent.SetDestination(transform.position);
         float sinceLastAction = 0;
-        while (sinceLastAction < attackDelay) {
+        transform.LookAt(player);
+        myLight.color = Color.red;
+        if (sinceLastAction < attackDelay) {
             sinceLastAction += Time.deltaTime;
+            Debug.Log("timer = " + sinceLastAction);
         } 
         if (sinceLastAction >= attackDelay) {
             myLight.color = Color.red;
-            Invoke("killPlayer", 0.5f);
+            killPlayer();
             sinceLastAction = 0;
         }
     }

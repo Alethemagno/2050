@@ -199,6 +199,8 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 256
+  lastCheckpoint: {x: 0, y: 0, z: 0}
+  checkpoints: []
 --- !u!114 &1605530206
 MonoBehaviour:
   m_ObjectHideFlags: 0
