@@ -117,7 +117,7 @@ public class BasicEnemyController : MonoBehaviour
     private void AttackPlayer()
     {
         //Make sure enemy doesn't move
-        agent.SetDestination(transform.position);
+        //agent.SetDestination(transform.position);
         transform.LookAt(player);
         myLight.color = Color.white;
         float sinceLastAction = 0;
@@ -133,6 +133,7 @@ public class BasicEnemyController : MonoBehaviour
     private void killPlayer() {
         player.SendMessage("playerDeath");
         myLight.color = Color.blue;
+        Debug.Log("I sent you to " + playerGO.GetComponent<PlayerMovement>().lastCheckpoint);
         player.transform.position = playerGO.GetComponent<PlayerMovement>().lastCheckpoint;
 
     }
