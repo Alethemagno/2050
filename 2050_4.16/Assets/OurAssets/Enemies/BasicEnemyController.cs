@@ -7,20 +7,21 @@ public class BasicEnemyController : MonoBehaviour
 {
     public NavMeshAgent agent;
     public Transform player;
-    public LayerMask whatIsGround, whatIsPlayer;
-    public float health;
+    public LayerMask whatIsGround, whatIsVisible, whatIsPlayer;
+    public float health, sightAngle, angleOffset;
     public Light myLight;
 
     //Patroling
     public Vector3 walkPoint;
     bool walkPointSet;
-    public float walkPointRange;
+    public GameObject[] walkPoints;
+    public int walkPointCounter;
 
     //Attacking
-    public float timeBetweenAttacks;
+    public float attackDelay;
     bool alreadyAttacked;
     public GameObject projectile;
-    Vector3 lastSeen;
+    RaycastHit lastSeen;
 
     //States
     public float sightRange, attackRange, visionConeAngle;
@@ -36,9 +37,9 @@ public class BasicEnemyController : MonoBehaviour
     private void Update()
     {
         //Check for sight and attack range
-        //playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        playerInSightRange = checkSight();
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+        //playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsVisible);
+        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+        playerInAttackRange = checkSight();
 
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
@@ -47,13 +48,19 @@ public class BasicEnemyController : MonoBehaviour
 
     private bool checkSight() {
         Vector3 vectorToPlayer = player.position-transform.position;
-        if (vectorToPlayer.magnitude <= sightRange) {
+        if (vectorToPlayer.magnitude <= attackRange) {
             if (Vector3.Angle(transform.forward, vectorToPlayer) <= visionConeAngle) {
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, sightRange, whatIsPlayer)) {
-                    lastSeen = hit.transform.position;
-                    return true;
+                Vector3 startingDirection = Quaternion.AngleAxis(-sightAngle, Vector3.up) * this.transform.forward;
+                Vector3 finalRayDirection = startingDirection;
+                for (int i = 0; i < 7; i++) {
+                    if (Physics.Raycast(transform.position, finalRayDirection, out hit, sightRange, whatIsVisible)) {
+                        lastSeen = hit;
+                        return true;
+                    }
+                    finalRayDirection = (Quaternion.AngleAxis(angleOffset, Vector3.up)) * finalRayDirection;
                 }
+                
             }
             //goThere(lastSeen);
         }
@@ -74,58 +81,53 @@ public class BasicEnemyController : MonoBehaviour
 
     private void Patroling()
     {
+        walkPointSet = false;
         myLight.color = Color.blue;
-        if (!walkPointSet) SearchWalkPoint();
+        if (!walkPointSet) {
+            walkPoint = walkPoints[walkPointCounter].transform.position;
+            walkPointSet = true;
+        }
 
         if (walkPointSet)
             agent.SetDestination(walkPoint);
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
+        
 
         //Walkpoint reached
-        if (distanceToWalkPoint.magnitude < 1f)
+        if (distanceToWalkPoint.magnitude < 1f) {
+            walkPointCounter++;
             walkPointSet = false;
+        }
     }
-    private void SearchWalkPoint()
-    {
-        //Calculate random point in range
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
-
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
-            walkPointSet = true;
-    }
+    
 
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
-        myLight.color = Color.white;
+        myLight.color = Color.blue;
+        //Debug.Log("Chasing the player");
     }
 
     private void AttackPlayer()
     {
         //Make sure enemy doesn't move
-        agent.SetDestination(transform.position);
+        //agent.SetDestination(transform.position);
         transform.LookAt(player);
         myLight.color = Color.white;
-
-        if (!alreadyAttacked)
-        {
-            ///Attack code here
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
-            ///End of attack code
-
-            alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        float sinceLastAction = 0;
+        while (sinceLastAction < attackDelay) {
+            sinceLastAction += Time.deltaTime;
+        } 
+        if (sinceLastAction >= attackDelay) {
+            myLight.color = Color.red;
+            Invoke("killPlayer", 0.5f);
         }
     }
-    private void ResetAttack()
+    private void killPlayer()
     {
-        alreadyAttacked = false;
+        lastSeen.collider.SendMessage("playerDeath");
+        myLight.color = Color.blue;
     }
 
     public void TakeDamage(int damage)
@@ -145,5 +147,14 @@ public class BasicEnemyController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, (transform.TransformDirection(Vector3.forward)*5));
+        Vector3 startingDirection = Quaternion.AngleAxis(-sightAngle, Vector3.up) * transform.forward;
+        Vector3 finalRayDirection = startingDirection;
+        Gizmos.color = Color.yellow;
+        for (int i = 0; i < 7; i++) {
+            Gizmos.DrawLine(transform.position, finalRayDirection);
+            finalRayDirection = Quaternion.AngleAxis(angleOffset, Vector3.up) * finalRayDirection;
+        }
     }
 }

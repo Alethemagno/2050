@@ -44,8 +44,7 @@ public class Inventory : MonoBehaviour
             }
             if(Input.GetAxis("Mouse ScrollWheel") < 0.0f){
                 itemSelected -= 1;
-            }   
-            Debug.Log(itemSelected);
+            }
         }
 
         //Drop if equipped and "Q" is pressed

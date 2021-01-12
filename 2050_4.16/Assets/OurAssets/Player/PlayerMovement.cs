@@ -12,18 +12,21 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public float groundDistance = 0.4f, jumpHeight;
     public LayerMask groundMask;
+    Vector3 lastCheckpoint;
+    public GameObject[] checkpoints;
 
     Vector3 velocity;
     bool isGrounded;
     // Start is called before the first frame update
     void Start()
     {
-        
+        lastCheckpoint = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(lastCheckpoint);
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         if (isGrounded && velocity.y < 0) {
             velocity.y = 0f;
@@ -44,4 +47,19 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = jumpHeight;
         }
     }
+
+    void playerDeath() {
+        Debug.Log("Ure dead");
+        transform.position = lastCheckpoint;
+
+    }
+
+    void onTriggerEnter(Collider other) {
+        Debug.Log("it works");
+        if (other.tag == "Checkpoint") {
+            lastCheckpoint = other.transform.position;
+            Debug.Log("Checkpoint set");
+        }
+    }
+
 }
