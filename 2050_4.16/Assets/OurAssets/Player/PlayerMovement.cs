@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public float groundDistance = 0.4f, jumpHeight;
     public LayerMask groundMask;
-    Vector3 lastCheckpoint;
+    public Vector3 lastCheckpoint;
     public GameObject[] checkpoints;
 
     Vector3 velocity;
