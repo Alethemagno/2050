@@ -93,7 +93,7 @@ public class BasicEnemyController : MonoBehaviour
         Debug.Log("Im patroling to" + walkPoints[walkPointCounter].transform.position + ", walkPointCounter = " +  walkPointCounter);
         Vector3 distanceToWalkPoint = transform.position - walkPoints[walkPointCounter].transform.position;
         //Walkpoint reached
-        if (distanceToWalkPoint.magnitude < 1.0f) {
+        if (distanceToWalkPoint.magnitude < 3.0f) {
             walkPointCounter++;
         }
         if(walkPointCounter >= walkPoints.Length) {
