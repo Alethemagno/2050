@@ -62,7 +62,7 @@ public class BasicEnemyController : MonoBehaviour
         Vector3 finalRayDirection = startingDirection;
         for (int i = 0; i < 7; i++) {
             if (Physics.Raycast(transform.position, finalRayDirection, out hit, sightRange, whatIsVisible)) {
-                Debug.Log("I see " + hit.transform.tag);
+                //Debug.Log("I see " + hit.transform.tag);
                 if(hit.transform.tag == "Player") {
                     return true;
                 }   
@@ -75,6 +75,7 @@ public class BasicEnemyController : MonoBehaviour
     private void goThere(Vector3 loc)
     {
         walkPoint = loc;
+        walkPointSet = false;
         agent.SetDestination(walkPoint);
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
@@ -87,31 +88,16 @@ public class BasicEnemyController : MonoBehaviour
     private void Patroling()
     {
         sinceLastAction = 0;
-        walkPointSet = false;
         myLight.color = Color.blue;
-        if (!walkPointSet) {
-            walkPoint = walkPoints[walkPointCounter].transform.position;
-            walkPointSet = true;
-            Debug.Log("Walking to Walkpoint " + walkPointCounter);
-        }
-
-        if (walkPointSet)
-            agent.SetDestination(walkPoint);
-
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
-        
-
+        agent.SetDestination(walkPoints[walkPointCounter].transform.position);
+        Debug.Log("Im patroling to" + walkPoints[walkPointCounter].transform.position + ", walkPointCounter = " +  walkPointCounter);
+        Vector3 distanceToWalkPoint = transform.position - walkPoints[walkPointCounter].transform.position;
         //Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1.0f) {
             walkPointCounter++;
-            float c = 0;
-            c += Time.deltaTime;
-            if (c >= 5) {
-                walkPointSet = false;
-            }
-            if (walkPointCounter == walkPoints.Length - 1) {
-                walkPointCounter = 0;  
-            }
+        }
+        if(walkPointCounter >= walkPoints.Length) {
+            walkPointCounter = 0;
         }
     }
     
@@ -120,7 +106,6 @@ public class BasicEnemyController : MonoBehaviour
     {
         agent.SetDestination(player.position);
         myLight.color = Color.white;
-        transform.LookAt(player.position);
         //Debug.Log("Chasing the player");
     }
 
@@ -140,7 +125,6 @@ public class BasicEnemyController : MonoBehaviour
         if (sinceLastAction >= attackDelay) {
             myLight.color = Color.red;
             killPlayer();
-            Debug.Log("I ran killPlayer");
             sinceLastAction = 0;
         }
     }
@@ -148,8 +132,8 @@ public class BasicEnemyController : MonoBehaviour
         //Debug.Log("killPlayer ran successfully");
         player.SendMessage("playerDeath");
         myLight.color = Color.blue;
-        Debug.Log("I sent you to " + playerGO.GetComponent<PlayerMovement>().lastCheckpoint);
-        player.transform.position = playerGO.GetComponent<PlayerMovement>().lastCheckpoint;
+        //Debug.Log("I sent you to " + playerGO.GetComponent<PlayerMovement>().lastCheckpoint);
+        //player.transform.position = playerGO.GetComponent<PlayerMovement>().lastCheckpoint;
 
     }
 
