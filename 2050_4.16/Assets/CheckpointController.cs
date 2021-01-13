@@ -7,6 +7,12 @@ public class CheckpointController : MonoBehaviour
     public GameObject player;
     public float spinSpeed;
     private bool activated;
+    public Light myLight;
+
+    void Start() {
+        myLight.intensity = 0.0f;
+    }
+
     void Update()
     {
         transform.Rotate(Vector3.up * Time.deltaTime * spinSpeed);
@@ -15,8 +21,10 @@ public class CheckpointController : MonoBehaviour
             Debug.Log("--- Checkpoint Set ---" + transform.position);
             player.GetComponent<PlayerMovement>().lastCheckpoint = transform.position;
             if (!activated) {
-                spinSpeed *= 3;
+                spinSpeed *= 6;
                 activated = true;
+                myLight.intensity = 3.0f;
+
             }
         }
     }
