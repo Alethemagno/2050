@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 public class DigitalDisplay : MonoBehaviour
 {
     public int iLevelToLoad;
-    public string sLevelToLoad;
     public bool unlocked;
 
     [SerializeField]
@@ -21,6 +20,7 @@ public class DigitalDisplay : MonoBehaviour
     //start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
         unlocked = false;
         codeSequence = "";
 
@@ -144,9 +144,10 @@ public class DigitalDisplay : MonoBehaviour
 
     private void CheckResults()
     {
-        if (codeSequence == "0111")
+        if (codeSequence == "2111")
         {
             unlocked = true;
+            Cursor.lockState = CursorLockMode.Locked;
             LoadScene();
         }
         else
@@ -170,10 +171,6 @@ public class DigitalDisplay : MonoBehaviour
         if ( unlocked == true)
         {
             SceneManager.LoadScene(iLevelToLoad);
-        }
-        else
-        {
-            SceneManager.LoadScene(sLevelToLoad);
         }
     }
 

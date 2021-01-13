@@ -14,6 +14,7 @@ public class PushTheButton : MonoBehaviour
     //Start is called before the first frame
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
         buttonName = gameObject.name;
         dividerPosition = buttonName.IndexOf("_");
         buttonValue = buttonName.Substring(0, dividerPosition);

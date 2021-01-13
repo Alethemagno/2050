@@ -6,13 +6,19 @@ public class MoveSystem : MonoBehaviour
 {
     public GameObject correctForm;
     private bool moving;
+    public int index;
+
+    public GameObject button; 
 
     private float startPosX;
     private float startPosY;
 
+    private Vector3 resetPosition;
+
     void Start()
     {
-
+        Cursor.lockState = CursorLockMode.None;
+        resetPosition = this.transform.localPosition;
     }
 
     void Update()
@@ -21,7 +27,7 @@ public class MoveSystem : MonoBehaviour
         {
             Vector3 mousePos;
             mousePos = Input.mousePosition;
-            mousePos = Camera.main.ScreenToWorldPoint(mousePos); 
+            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
             this.gameObject.transform.localPosition = new Vector3(mousePos.x -
                      startPosX, mousePos.y - startPosY,
@@ -49,5 +55,15 @@ public class MoveSystem : MonoBehaviour
     private void OnMouseUp()
     {
         moving = false;
+
+        if (Mathf.Abs(this.transform.localPosition.x - correctForm.transform.localPosition.x ) <= 1f &&
+            Mathf.Abs(this.transform.localPosition.y - correctForm.transform.localPosition.y) <= 1f)
+        {
+            this.transform.localPosition = new Vector3(correctForm.transform.localPosition.x, correctForm.transform.localPosition.y,
+                correctForm.transform.localPosition.z);
+
+            button.GetComponent<LoadLevel>().keyArray[index] = true; 
+
+        } 
     }
 }

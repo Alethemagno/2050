@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/OurAssets/Scenes/PuzzleLogic.unity
     guid: 5b59ad35e6616a540a9601504dac22b2
+<<<<<<< Updated upstream
+=======
+  - enabled: 1
+    path: Assets/OurAssets/Scenes/programmingPuzzle.unity
+    guid: 90e61508733a6a849ad590c38f8903df
+>>>>>>> Stashed changes
   m_configObjects: {}

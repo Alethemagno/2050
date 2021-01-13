@@ -3482,8 +3482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 402dc8be6b4808649a9b17b980e99a4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iLevelToLoad: 0
-  sLevelToLoad: 
+  iLevelToLoad: 2
   unlocked: 0
   digits:
   - {fileID: 21300000, guid: 2ba027e541c83de4e80342282240744b, type: 3}
