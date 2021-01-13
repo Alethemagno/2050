@@ -122,8 +122,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5527255004033343883}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.041762337, y: 11.198042, z: -160.3444}
-  m_LocalScale: {x: 1, y: 3, z: 1}
+  m_LocalPosition: {x: 0.041762337, y: 5, z: -160.3444}
+  m_LocalScale: {x: 1, y: 1.5, z: 1}
   m_Children:
   - {fileID: 5527255003769429046}
   m_Father: {fileID: 0}
@@ -200,7 +200,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 11
+  m_Speed: 17
   m_Acceleration: 12
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -236,8 +236,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   health: 20
-  sightAngle: 30
-  angleOffset: 10
+  sightAngle: 90
+  angleOffset: 30
   myLight: {fileID: 5527255003769429049}
   gunShot: {fileID: 8300000, guid: 69d9ade5e3d61444bb131cc03ad163be, type: 3}
   walkPoint: {x: 0, y: 0, z: 0}
@@ -251,11 +251,11 @@ MonoBehaviour:
   walkPointCounter: 0
   attackDelay: 0.7
   projectile: {fileID: 0}
-  sightRange: 30
-  attackRange: 8
-  visionConeAngle: 30
-  playerInSightRange: 0
-  playerInAttackRange: 0
+  sightRange: 90
+  attackRange: 10
+  visionConeAngle: 45
+  playerInSightRange: 1
+  playerInAttackRange: 1
 --- !u!82 &5527255004033343882
 AudioSource:
   m_ObjectHideFlags: 0
