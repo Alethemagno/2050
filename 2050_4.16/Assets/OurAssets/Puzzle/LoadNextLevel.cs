@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 
 
-public class LoadLevel : MonoBehaviour
+public class LoadNextLevel : MonoBehaviour
 {
     public int iLevelToLoad;
     //public MoveSystem isDoorOpen;

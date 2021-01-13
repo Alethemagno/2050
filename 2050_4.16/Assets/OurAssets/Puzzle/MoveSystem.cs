@@ -62,7 +62,7 @@ public class MoveSystem : MonoBehaviour
             this.transform.localPosition = new Vector3(correctForm.transform.localPosition.x, correctForm.transform.localPosition.y,
                 correctForm.transform.localPosition.z);
 
-            button.GetComponent<LoadLevel>().keyArray[index] = true; 
+            button.GetComponent<LoadNextLevel>().keyArray[index] = true; 
 
         } 
     }
