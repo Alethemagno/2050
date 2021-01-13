@@ -15,12 +15,17 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 lastCheckpoint;
     public GameObject[] checkpoints;
 
+    public Transform respawn1;
+    public Transform respawn2;
+    private bool doneFirstChallenge;
+
     Vector3 velocity;
     bool isGrounded;
     // Start is called before the first frame update
     void Start()
     {
         lastCheckpoint = transform.position;
+        doneFirstChallenge = false;
     }
 
     // Update is called once per frame
@@ -59,7 +64,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
-        FindStartPos();
+        if (!doneFirstChallenge) {
+            controller.enabled = false;
+            controller.transform.position = respawn1.position;
+            controller.enabled = true;
+        } else {
+            controller.enabled = false;
+            controller.transform.position = respawn2.position;
+            controller.enabled = true;
+        }
     }
 
     void FindStartPos()
