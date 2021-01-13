@@ -24,13 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5527255003769429047}
-  m_LocalRotation: {x: 0.08191606, y: -0, z: -0, w: 0.99663925}
+  m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
   m_LocalPosition: {x: 0, y: 0.4, z: 0.43}
   m_LocalScale: {x: 0.58096, y: 0.36140358, z: 0.34563053}
   m_Children: []
   m_Father: {fileID: 5527255003563106196}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 9.397, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
 --- !u!108 &5527255003769429049
 Light:
   m_ObjectHideFlags: 0
@@ -43,9 +43,9 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 100
+  m_Intensity: 500
   m_Range: 12
-  m_SpotAngle: 53
+  m_SpotAngle: 59
   m_InnerSpotAngle: 3
   m_CookieSize: 10
   m_Shadows:
@@ -249,11 +249,11 @@ MonoBehaviour:
   - {fileID: 0}
   playerGO: {fileID: 0}
   walkPointCounter: 0
-  attackDelay: 0.7
+  attackDelay: 1
   projectile: {fileID: 0}
-  sightRange: 90
-  attackRange: 10
-  visionConeAngle: 45
+  sightRange: 100
+  attackRange: 20
+  visionConeAngle: 120
   playerInSightRange: 1
   playerInAttackRange: 1
 --- !u!82 &5527255004033343882
