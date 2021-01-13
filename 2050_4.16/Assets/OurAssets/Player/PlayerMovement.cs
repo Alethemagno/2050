@@ -17,13 +17,14 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform respawn1;
     public Transform respawn2;
-    private bool doneFirstChallenge;
+    public bool doneFirstChallenge;
 
     Vector3 velocity;
     bool isGrounded;
     // Start is called before the first frame update
     void Start()
     {
+        doneFirstChallenge = false;
         lastCheckpoint = transform.position;
         doneFirstChallenge = false;
     }

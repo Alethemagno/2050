@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/OurAssets/Scenes/PuzzleLogic.unity
     guid: 5b59ad35e6616a540a9601504dac22b2
+  - enabled: 1
+    path: Assets/OurAssets/Scenes/EndScene.unity
+    guid: 85c1660c45b7bd747811612c3d6be3ab
   m_configObjects: {}

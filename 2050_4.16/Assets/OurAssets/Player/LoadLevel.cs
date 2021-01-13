@@ -9,6 +9,8 @@ public class LoadLevel : MonoBehaviour
     public GameObject door;
     public Vector3 doorPosition;
     public Quaternion doorRotation;
+    public bool doneFirstChallenge;
+    public GameObject player;
 
 
 
@@ -16,14 +18,19 @@ public class LoadLevel : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-        
+    }
+
+    void Update() {
+        if (player.GetComponent<PlayerMovement>().doneFirstChallenge) {
+            Destroy(door);
+        }
     }
 
     void LoadScene()
     {
         //door.position = doorPosition;
-        Destroy(door);
         SceneManager.LoadScene(iLevelToLoad);
+        Destroy(door);
     }
 
 }
