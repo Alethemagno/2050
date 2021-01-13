@@ -11,6 +11,8 @@ public class BasicEnemyController : MonoBehaviour
     public float health, sightAngle, angleOffset;
     public Light myLight;
 
+    public AudioClip gunShot;
+
 
     //Patroling
     public Vector3 walkPoint;
@@ -29,6 +31,7 @@ public class BasicEnemyController : MonoBehaviour
     public bool playerInSightRange, playerInAttackRange;
 
     private RaycastHit lastHit;
+    private float sinceLastAction;
 
     private void Awake()
     {
@@ -36,6 +39,8 @@ public class BasicEnemyController : MonoBehaviour
         player = playerGO.transform;
         agent = GetComponent<NavMeshAgent>();
         myLight.color = Color.blue;
+        sinceLastAction = 0;
+        myLight.intensity = 0.0f;
     }
 
     private void Update()
@@ -44,7 +49,7 @@ public class BasicEnemyController : MonoBehaviour
         //playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsVisible);
         playerInSightRange = checkSight();
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-
+        
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         if (playerInSightRange && playerInAttackRange) ChasePlayer();
         if (!playerInSightRange && playerInAttackRange) ChasePlayer();
@@ -81,11 +86,13 @@ public class BasicEnemyController : MonoBehaviour
 
     private void Patroling()
     {
+        sinceLastAction = 0;
         walkPointSet = false;
         myLight.color = Color.blue;
         if (!walkPointSet) {
             walkPoint = walkPoints[walkPointCounter].transform.position;
             walkPointSet = true;
+            Debug.Log("Walking to Walkpoint " + walkPointCounter);
         }
 
         if (walkPointSet)
@@ -95,10 +102,14 @@ public class BasicEnemyController : MonoBehaviour
         
 
         //Walkpoint reached
-        if (distanceToWalkPoint.magnitude < 1f) {
+        if (distanceToWalkPoint.magnitude < 1.0f) {
             walkPointCounter++;
-            walkPointSet = false;
-            if (walkPointCounter == walkPoints.Length) {
+            float c = 0;
+            c += Time.deltaTime;
+            if (c >= 5) {
+                walkPointSet = false;
+            }
+            if (walkPointCounter == walkPoints.Length - 1) {
                 walkPointCounter = 0;  
             }
         }
@@ -117,25 +128,33 @@ public class BasicEnemyController : MonoBehaviour
     {
         //Make sure enemy doesn't move
         agent.SetDestination(transform.position);
-        float sinceLastAction = 0;
         transform.LookAt(player);
         myLight.color = Color.red;
+        if (sinceLastAction == 0) {
+            AudioSource.PlayClipAtPoint(gunShot, transform.position, 1.0f);
+        }
         if (sinceLastAction < attackDelay) {
             sinceLastAction += Time.deltaTime;
-            Debug.Log("timer = " + sinceLastAction);
+            //Debug.Log("timer = " + sinceLastAction);
         } 
         if (sinceLastAction >= attackDelay) {
             myLight.color = Color.red;
             killPlayer();
+            Debug.Log("I ran killPlayer");
             sinceLastAction = 0;
         }
     }
     private void killPlayer() {
+        //Debug.Log("killPlayer ran successfully");
         player.SendMessage("playerDeath");
         myLight.color = Color.blue;
         Debug.Log("I sent you to " + playerGO.GetComponent<PlayerMovement>().lastCheckpoint);
         player.transform.position = playerGO.GetComponent<PlayerMovement>().lastCheckpoint;
 
+    }
+
+    public void ARGlassesActivated() {
+        myLight.intensity = 15.0f;
     }
 
     public void TakeDamage(int damage)

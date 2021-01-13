@@ -9,6 +9,11 @@ public class Inventory : MonoBehaviour
     public GameObject[] slots, itemButtons;
     public Transform player, camera;
     public LayerMask itemLayerMask;
+    public GameObject bombPrefab;
+    public GameObject ladderPrefab;
+    public GameObject allEnemies;
+    public AudioClip useItemClip;
+    public AudioClip useARGlassesClip;
 
     private int pickUpRange;
     private RaycastHit hit;
@@ -35,6 +40,7 @@ public class Inventory : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.E)) {
             if (Physics.Raycast(camera.position, camera.TransformDirection(Vector3.forward), out hit, pickUpRange, itemLayerMask)) {
                 hit.collider.SendMessage("PickUp");
+                AudioSource.PlayClipAtPoint(useItemClip, transform.position, 0.5f);
             }
         }
 
@@ -50,6 +56,13 @@ public class Inventory : MonoBehaviour
         //Drop if equipped and "Q" is pressed
         if (Input.GetKeyDown(KeyCode.Q)) {
             Drop();
+            AudioSource.PlayClipAtPoint(useItemClip, transform.position, 0.5f);
+        }
+
+        //Use if equipped and "F" is pressed
+        if (Input.GetKeyDown(KeyCode.F)) {
+            Use();
+            AudioSource.PlayClipAtPoint(useItemClip, transform.position, 0.5f);
         }
     }
 
@@ -70,8 +83,41 @@ public class Inventory : MonoBehaviour
     }
 
     void Use() {
-        itemButtons[itemSelected] = null;
-        slots[itemSelected] = null;
-        isFull[itemSelected] = false;
+        if (itemButtons[itemSelected].name == "CheeseIcon(Clone)") {
+            Debug.Log("Monch Monch");
+            slotScript slotData = slots[itemSelected].GetComponent<slotScript>();
+            itemButtons[itemSelected] = null;
+            slotData.drop();
+            isFull[itemSelected] = false;
+        }
+
+        if (itemButtons[itemSelected].name == "BombIcon(Clone)") {
+            Rigidbody rb = Instantiate(bombPrefab, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            rb.AddForce(camera.TransformDirection(Vector3.forward) * 32f, ForceMode.Impulse);
+            rb.AddForce(camera.TransformDirection(Vector3.up) * 8f, ForceMode.Impulse);
+            slotScript slotData = slots[itemSelected].GetComponent<slotScript>();
+            itemButtons[itemSelected] = null;
+            slotData.drop();
+            isFull[itemSelected] = false;
+        }
+
+        if (itemButtons[itemSelected].name == "ARGlassesIcon(Clone)") {
+            allEnemies.BroadcastMessage("ARGlassesActivated");
+            AudioSource.PlayClipAtPoint(useARGlassesClip, transform.position, 0.5f);
+            slotScript slotData = slots[itemSelected].GetComponent<slotScript>();
+            itemButtons[itemSelected] = null;
+            slotData.drop();
+            isFull[itemSelected] = false;
+        }
+
+        if (itemButtons[itemSelected].name == "LadderIcon(Clone)") {
+            Rigidbody rb = Instantiate(ladderPrefab, transform.position + transform.forward*3, Quaternion.AngleAxis(19, transform.right) * Quaternion.identity).GetComponent<Rigidbody>();
+            slotScript slotData = slots[itemSelected].GetComponent<slotScript>();
+            itemButtons[itemSelected] = null;
+            slotData.drop();
+            isFull[itemSelected] = false;
+        }
+
+
     }
 }

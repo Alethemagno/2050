@@ -50,16 +50,9 @@ public class PlayerMovement : MonoBehaviour
 
     void playerDeath() {
         Debug.Log("Ure dead");
-        transform.position = lastCheckpoint;
-
+        controller.enabled = false;
+        controller.transform.position = lastCheckpoint;
+        controller.enabled = true;
+        Debug.Log("Ure dead so you were sent to " + lastCheckpoint);
     }
-
-    void onTriggerEnter(Collider other) {
-        Debug.Log("it works");
-        if (other.tag == "Checkpoint") {
-            lastCheckpoint = other.transform.position;
-            Debug.Log("Checkpoint set");
-        }
-    }
-
 }
