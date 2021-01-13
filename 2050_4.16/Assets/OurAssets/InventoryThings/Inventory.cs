@@ -112,7 +112,7 @@ public class Inventory : MonoBehaviour
         }
 
         if (itemButtons[itemSelected].name == "LadderIcon(Clone)") {
-            Rigidbody rb = Instantiate(ladderPrefab, transform.position + transform.forward*3, Quaternion.AngleAxis(19, transform.right) * Quaternion.identity).GetComponent<Rigidbody>();
+            Rigidbody rb = Instantiate(ladderPrefab, transform.position + transform.forward, Quaternion.AngleAxis(10, camera.right) * camera.rotation).GetComponent<Rigidbody>();
             slotScript slotData = slots[itemSelected].GetComponent<slotScript>();
             itemButtons[itemSelected] = null;
             slotData.drop();
