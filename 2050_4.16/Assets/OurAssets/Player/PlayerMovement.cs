@@ -51,11 +51,11 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void playerDeath() {
-        Debug.Log("Ure dead");
+        //Debug.Log("Ure dead");
         controller.enabled = false;
         controller.transform.position = lastCheckpoint;
         controller.enabled = true;
-        Debug.Log("Ure dead so you were sent to " + lastCheckpoint);
+        //Debug.Log("Ure dead so you were sent to " + lastCheckpoint);
     }
 
     private void OnLevelWasLoaded(int level)

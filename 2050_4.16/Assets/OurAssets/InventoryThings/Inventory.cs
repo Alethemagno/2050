@@ -40,6 +40,7 @@ public class Inventory : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.E)) {
             if (Physics.Raycast(camera.position, camera.TransformDirection(Vector3.forward), out hit, pickUpRange, itemLayerMask)) {
                 hit.collider.SendMessage("PickUp");
+                hit.collider.SendMessage("LoadScene");
                 AudioSource.PlayClipAtPoint(useItemClip, transform.position, 0.5f);
             }
         }
