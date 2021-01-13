@@ -55,4 +55,14 @@ public class PlayerMovement : MonoBehaviour
         controller.enabled = true;
         Debug.Log("Ure dead so you were sent to " + lastCheckpoint);
     }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        FindStartPos();
+    }
+
+    void FindStartPos()
+    {
+        transform.position = GameObject.FindWithTag("StartPos").transform.position;
+    }
 }

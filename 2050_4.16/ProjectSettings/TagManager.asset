@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Item
   - Checkpoint
+  - StartPos
   layers:
   - Default
   - TransparentFX
@@ -42,4 +43,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BlackBlocks
+    uniqueID: 3801123611
+    locked: 0
+  - name: TextBlocks
+    uniqueID: 602704465
     locked: 0
