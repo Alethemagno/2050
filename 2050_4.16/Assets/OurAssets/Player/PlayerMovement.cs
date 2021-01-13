@@ -26,11 +26,12 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(lastCheckpoint);
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        Debug.Log(isGrounded);
         if (isGrounded && velocity.y < 0) {
             velocity.y = 0f;
         }
+
         
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
@@ -45,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded && Input.GetButtonDown("Jump")) {
             velocity.y = jumpHeight;
+            Debug.Log("jump");
         }
     }
 

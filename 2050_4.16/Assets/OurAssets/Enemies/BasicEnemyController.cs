@@ -90,7 +90,7 @@ public class BasicEnemyController : MonoBehaviour
         sinceLastAction = 0;
         myLight.color = Color.blue;
         agent.SetDestination(walkPoints[walkPointCounter].transform.position);
-        Debug.Log("Im patroling to" + walkPoints[walkPointCounter].transform.position + ", walkPointCounter = " +  walkPointCounter);
+        //Debug.Log("Im patroling to" + walkPoints[walkPointCounter].transform.position + ", walkPointCounter = " +  walkPointCounter);
         Vector3 distanceToWalkPoint = transform.position - walkPoints[walkPointCounter].transform.position;
         //Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1.0f) {
