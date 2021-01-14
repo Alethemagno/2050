@@ -56,8 +56,8 @@ public class MoveSystem : MonoBehaviour
     {
         moving = false;
 
-        if (Mathf.Abs(this.transform.localPosition.x - correctForm.transform.localPosition.x ) <= 1f &&
-            Mathf.Abs(this.transform.localPosition.y - correctForm.transform.localPosition.y) <= 1f)
+        if (Mathf.Abs(this.transform.localPosition.x - correctForm.transform.localPosition.x ) <= 0.2f &&
+            Mathf.Abs(this.transform.localPosition.y - correctForm.transform.localPosition.y) <= 0.2f)
         {
             this.transform.localPosition = new Vector3(correctForm.transform.localPosition.x, correctForm.transform.localPosition.y,
                 correctForm.transform.localPosition.z);

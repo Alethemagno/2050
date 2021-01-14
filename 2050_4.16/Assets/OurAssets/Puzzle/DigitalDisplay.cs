@@ -144,7 +144,7 @@ public class DigitalDisplay : MonoBehaviour
 
     private void CheckResults()
     {
-        if (codeSequence == "2111")
+        if (codeSequence == "2111" || codeSequence == "0111")
         {
             unlocked = true;
             Cursor.lockState = CursorLockMode.Locked;
