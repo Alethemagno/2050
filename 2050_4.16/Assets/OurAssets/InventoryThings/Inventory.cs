@@ -63,7 +63,6 @@ public class Inventory : MonoBehaviour
         //Use if equipped and "F" is pressed
         if (Input.GetKeyDown(KeyCode.F)) {
             Use();
-            AudioSource.PlayClipAtPoint(useItemClip, transform.position, 0.5f);
         }
     }
 
@@ -84,6 +83,7 @@ public class Inventory : MonoBehaviour
     }
 
     void Use() {
+        AudioSource.PlayClipAtPoint(useItemClip, transform.position, 0.5f);
         if (itemButtons[itemSelected].name == "CheeseIcon(Clone)") {
             Debug.Log("Monch Monch");
             slotScript slotData = slots[itemSelected].GetComponent<slotScript>();
