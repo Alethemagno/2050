@@ -23,7 +23,7 @@ public class itemSelectedController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        reference = 67*inventory.itemSelected + 27;
-        transform.position = new Vector3(xPos + reference, gameObject.transform.position.y, gameObject.transform.position.z);
+        reference = inventory.slots[inventory.itemSelected].transform.position.x;
+        transform.position = new Vector3(reference, gameObject.transform.position.y, gameObject.transform.position.z);
     }
 }

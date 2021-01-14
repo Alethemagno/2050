@@ -32965,6 +32965,11 @@ PrefabInstance:
       propertyPath: m_StepOffset
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1281829564111632836, guid: 3a3310b3b49e04144957e2e5abe50a51,
+        type: 3}
+      propertyPath: mouseSensitivity
+      value: 350
+      objectReference: {fileID: 0}
     - target: {fileID: 1281829564111632837, guid: 3a3310b3b49e04144957e2e5abe50a51,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -65992,18 +65997,43 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6906499567332494222, guid: 955949e607bf91e4393011529ce15b9f,
         type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906499567332494222, guid: 955949e607bf91e4393011529ce15b9f,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906499567332494222, guid: 955949e607bf91e4393011529ce15b9f,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906499567332494222, guid: 955949e607bf91e4393011529ce15b9f,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906499567332494222, guid: 955949e607bf91e4393011529ce15b9f,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906499567332494222, guid: 955949e607bf91e4393011529ce15b9f,
+        type: 3}
       propertyPath: m_LocalPosition.z
       value: 17.7
       objectReference: {fileID: 0}
     - target: {fileID: 6906499567332494222, guid: 955949e607bf91e4393011529ce15b9f,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -135.9
+      value: -166.79999
       objectReference: {fileID: 0}
     - target: {fileID: 6906499567332494222, guid: 955949e607bf91e4393011529ce15b9f,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -183.5
+      value: 12.700012
       objectReference: {fileID: 0}
     - target: {fileID: 6906499568614891019, guid: 955949e607bf91e4393011529ce15b9f,
         type: 3}
