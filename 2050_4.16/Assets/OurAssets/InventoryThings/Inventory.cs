@@ -40,8 +40,12 @@ public class Inventory : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.E)) {
             if (Physics.Raycast(camera.position, camera.TransformDirection(Vector3.forward), out hit, pickUpRange, itemLayerMask)) {
                 hit.collider.SendMessage("PickUp");
-                hit.collider.SendMessage("LoadScene");
+                hit.collider.SendMessage("LoadScene", SendMessageOptions.DontRequireReceiver);
                 AudioSource.PlayClipAtPoint(useItemClip, transform.position, 0.5f);
+                if (hit.collider.tag == "ARGlasses") {
+                    allEnemies.BroadcastMessage("ARGlassesActivated");
+                    AudioSource.PlayClipAtPoint(useARGlassesClip, transform.position, 0.5f);
+                }
             }
         }
 

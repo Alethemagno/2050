@@ -1546,7 +1546,7 @@ MonoBehaviour:
   doorPosition: {x: 0, y: 0, z: 0}
   doorRotation: {x: 0, y: 0, z: 0, w: 0}
   doneFirstChallenge: 0
-  player: {fileID: 0}
+  player: {fileID: 2591092}
 --- !u!1001 &37743588
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33150,7 +33150,7 @@ PrefabInstance:
     - target: {fileID: 1281829563522493566, guid: 3a3310b3b49e04144957e2e5abe50a51,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 103.9
+      value: 471.3
       objectReference: {fileID: 0}
     - target: {fileID: 1281829563522493566, guid: 3a3310b3b49e04144957e2e5abe50a51,
         type: 3}
@@ -33160,7 +33160,7 @@ PrefabInstance:
     - target: {fileID: 1281829563522493566, guid: 3a3310b3b49e04144957e2e5abe50a51,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 158.2
+      value: 849.1
       objectReference: {fileID: 0}
     - target: {fileID: 1281829563522493566, guid: 3a3310b3b49e04144957e2e5abe50a51,
         type: 3}
@@ -45268,6 +45268,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2048532457}
     m_Modifications:
+    - target: {fileID: 3131584620159071984, guid: 2ee94adf5d17710499a213dd44e1a277,
+        type: 3}
+      propertyPath: m_TagString
+      value: ARGlasses
+      objectReference: {fileID: 0}
     - target: {fileID: 6837259976203746903, guid: 2ee94adf5d17710499a213dd44e1a277,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -45662,6 +45667,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849384746205075976, guid: 2ee94adf5d17710499a213dd44e1a277,
+        type: 3}
+      propertyPath: m_TagString
+      value: ARGlasses
       objectReference: {fileID: 0}
     - target: {fileID: 6849384746205075977, guid: 2ee94adf5d17710499a213dd44e1a277,
         type: 3}
