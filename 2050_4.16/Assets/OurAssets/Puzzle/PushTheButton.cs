@@ -26,6 +26,7 @@ public class PushTheButton : MonoBehaviour
     private void ButtonClicked()
     {
         ButtonPressed(buttonValue);
+        Debug.Log("Hello");
     }
 
 }
